@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   View,
@@ -10,7 +11,6 @@ import {
 } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
-  // Sample data for Daily Supplies and Other Services
   const dailySupplies = [
     { id: "1", name: "Water Can", image: require("../assets/water-can.png") },
     { id: "2", name: "Milk", image: require("../assets/milk.png") },
@@ -63,9 +63,9 @@ const HomeScreen = ({ navigation }) => {
           </Text>
           <TouchableOpacity
             style={styles.subscribeButton}
-            onPress={() => navigation.navigate("Details")}
+            onPress={() => navigation.navigate("Search")}
           >
-            <Text style={styles.subscribeButtonText}>Go to Details</Text>
+            <Text style={styles.subscribeButtonText}>Go to Search</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -79,7 +79,7 @@ const HomeScreen = ({ navigation }) => {
         horizontal={false}
         numColumns={3}
         contentContainerStyle={styles.flatListContent}
-        nestedScrollEnabled={true} // Added this to fix scroll issues
+        nestedScrollEnabled={true}
       />
 
       {/* Other Services */}
@@ -91,7 +91,7 @@ const HomeScreen = ({ navigation }) => {
         horizontal={false}
         numColumns={3}
         contentContainerStyle={styles.flatListContent}
-        nestedScrollEnabled={true} // Added this to fix scroll issues
+        nestedScrollEnabled={true}
       />
 
       {/* Bottom Navigation */}
@@ -99,7 +99,10 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.navItem}>
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("Search")}
+        >
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
@@ -113,86 +116,39 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-// Styles for the component
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f9f9f9",
-  },
-  header: {
-    padding: 20,
-    backgroundColor: "#FFF3E6",
-  },
-  deliveryText: {
-    fontSize: 14,
-    color: "#888",
-  },
-  homeText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
+  container: { flex: 1, backgroundColor: "#f9f9f9" },
+  header: { padding: 20, backgroundColor: "#FFF3E6" },
+  deliveryText: { fontSize: 14, color: "#888" },
+  homeText: { fontSize: 18, fontWeight: "bold" },
   banner: {
     flexDirection: "row",
     alignItems: "center",
     padding: 20,
     backgroundColor: "#E8F7E6",
   },
-  bannerImage: {
-    width: 80,
-    height: 120,
-    resizeMode: "contain",
-  },
-  bannerTextContainer: {
-    marginLeft: 10,
-  },
-  bannerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#2E7D32",
-  },
-  bannerSubtitle: {
-    fontSize: 16,
-    color: "#555",
-  },
-  bannerDescription: {
-    fontSize: 14,
-    color: "#888",
-    marginTop: 5,
-  },
+  bannerImage: { width: 80, height: 120, resizeMode: "contain" },
+  bannerTextContainer: { marginLeft: 10 },
+  bannerTitle: { fontSize: 20, fontWeight: "bold", color: "#2E7D32" },
+  bannerSubtitle: { fontSize: 16, color: "#555" },
+  bannerDescription: { fontSize: 14, color: "#888", marginTop: 5 },
   subscribeButton: {
     marginTop: 10,
     padding: 10,
     backgroundColor: "#80CBC4",
     borderRadius: 5,
   },
-  subscribeButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    textAlign: "center",
-  },
+  subscribeButtonText: { color: "#fff", fontSize: 16, textAlign: "center" },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  flatListContent: {
-    paddingHorizontal: 10,
-  },
-  item: {
-    flex: 1,
-    alignItems: "center",
-    padding: 10,
-  },
-  itemImage: {
-    width: 60,
-    height: 60,
-    resizeMode: "contain",
-  },
-  itemText: {
-    marginTop: 5,
-    fontSize: 14,
-  },
+  flatListContent: { paddingHorizontal: 10 },
+  item: { flex: 1, alignItems: "center", padding: 10 },
+  itemImage: { width: 60, height: 60, resizeMode: "contain" },
+  itemText: { marginTop: 5, fontSize: 14 },
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -201,13 +157,8 @@ const styles = StyleSheet.create({
     borderTopColor: "#EEE",
     borderTopWidth: 1,
   },
-  navItem: {
-    alignItems: "center",
-  },
-  navText: {
-    fontSize: 14,
-    color: "#555",
-  },
+  navItem: { alignItems: "center" },
+  navText: { fontSize: 14, color: "#555" },
 });
 
 export default HomeScreen;
