@@ -63,9 +63,9 @@ const HomeScreen = ({ navigation }) => {
           </Text>
           <TouchableOpacity
             style={styles.subscribeButton}
-            onPress={() => navigation.navigate("Search")}
+            onPress={() => navigation.navigate("")}
           >
-            <Text style={styles.subscribeButtonText}>Go to Search</Text>
+            <Text style={styles.subscribeButtonText}>Subscribe</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -105,9 +105,14 @@ const HomeScreen = ({ navigation }) => {
         >
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>Drops</Text>
+
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("drops")}
+        >
+          <Text style={styles.navText}>drops</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.navItem}>
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
@@ -135,10 +140,10 @@ const styles = StyleSheet.create({
   subscribeButton: {
     marginTop: 10,
     padding: 10,
-    backgroundColor: "#80CBC4",
+    backgroundColor: "#d1fae5",
     borderRadius: 5,
   },
-  subscribeButtonText: { color: "#fff", fontSize: 16, textAlign: "center" },
+  subscribeButtonText: { color: "#", fontSize: 16, textAlign: "center" },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",

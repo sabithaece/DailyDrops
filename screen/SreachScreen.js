@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  TextInput,
 } from "react-native";
 
 // Reusable ProductCard component
@@ -52,7 +53,18 @@ const runningLowItems = [
   { id: "3", name: "Flowers", image: require("../assets/flowers.png") },
 ];
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+    const filtered = products.filter((product) =>
+      product.title.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
   const renderProductItem = ({ item }) => (
     <ProductCard
       title={item.title}
@@ -70,44 +82,85 @@ const SearchScreen = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Section: What Are You Running Low On */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>What Are You Running Low On?</Text>
-        <FlatList
-          data={runningLowItems}
-          renderItem={renderRunningLowItem}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+    <View style={styles.container}>
+      {/* Search Box */}
+      <TextInput
+        style={styles.searchBox}
+        placeholder="Search products..."
+        value={searchQuery}
+        onChangeText={handleSearch}
+      />
 
-      {/* Section: Popular in Your Area */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Popular in Your Area</Text>
-        <FlatList
-          data={products}
-          renderItem={renderProductItem}
-          keyExtractor={(item) => item.id}
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-    </ScrollView>
+      <ScrollView style={styles.scrollViewContent}>
+        {/* Section: What Are You Running Low On */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>What Are You Running Low On?</Text>
+          <FlatList
+            data={runningLowItems}
+            renderItem={renderRunningLowItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
 
-    
+        {/* Section: Popular in Your Area */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Popular in Your Area</Text>
+          <FlatList
+            data={filteredProducts}
+            renderItem={renderProductItem}
+            keyExtractor={(item) => item.id}
+            horizontal={false}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("Search")}
+        >
+          <Text style={styles.navText}>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("drops")}
+        >
+          <Text style={styles.navText}>drops</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navText}>Account</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: "#f5f5f5",
+  },
+  searchBox: {
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    margin: 10,
+    borderColor: "#ddd",
+    borderWidth: 1,
+  },
+  scrollViewContent: {
+    flex: 1,
   },
   section: {
     marginBottom: 20,
+    paddingHorizontal: 10,
   },
   sectionTitle: {
     fontSize: 18,
@@ -139,9 +192,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 15,
-    elevation: 3, // Shadow effect for Android
+    elevation: 3,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 }, // Shadow effect for iOS
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
@@ -172,6 +225,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  bottomNav: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 15,
+    backgroundColor: "#FFF",
+    borderTopColor: "#EEE",
+    borderTopWidth: 1,
+  },
+  navItem: { alignItems: "center" },
+  navText: { fontSize: 14, color: "#555" },
 });
 
 export default SearchScreen;
