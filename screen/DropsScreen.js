@@ -7,8 +7,13 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const DropsScreen = () => {
+  const navigation = useNavigation();
+  const pressSearch = () => {
+    navigation.navigate("Search");
+  };
   // Date row data
   const dates = ["12", "13", "14", "15", "16", "17", "18"];
   const dayNames = ["THU", "FRI", "SAT", "SUN", "MON", "TUE", "WED"];
@@ -87,31 +92,33 @@ const DropsScreen = () => {
             <TouchableOpacity style={styles.manageButton}>
               <Text style={styles.manageButtonText}>Manage</Text>
             </TouchableOpacity>
-
-
-            
           </View>
         ))}
       </ScrollView>
 
-       {/* Bottom Navigation */}
+      {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => navigation.navigate("Search")}
+          onPress={() => navigation.navigate("Home")}
         >
+          <Text style={styles.navText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={pressSearch}>
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("drops")}
         >
           <Text style={styles.navText}>drops</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("Account")}
+        >
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
       </View>
@@ -215,6 +222,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 15,
+    backgroundColor: "#FFF",
+    borderTopColor: "#EEE",
+    borderTopWidth: 1,
+  },
+  navItem: { alignItems: "center" },
+  navText: { fontSize: 14, color: "#555" },
 });
 
 export default DropsScreen;

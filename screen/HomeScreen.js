@@ -96,7 +96,10 @@ const HomeScreen = ({ navigation }) => {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("Home")}
+        >
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -113,7 +116,10 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.navText}>drops</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate("Account")}
+        >
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
       </View>
