@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
           source={require("../assets/aquafina.png")}
           style={styles.bannerImage}
         />
-        <View style={styles.bannerTextContainer}>
+        <View >
           <Text style={styles.bannerTitle}>Daily Drop</Text>
           <Text style={styles.bannerSubtitle}>Thirsty for Savings?</Text>
           <Text style={styles.bannerDescription}>
@@ -130,6 +130,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9f9f9" },
   header: { padding: 20, backgroundColor: "#FFF3E6" },
+  white: { backgroundColor: "#FFF" },
   deliveryText: { fontSize: 14, color: "#888" },
   homeText: { fontSize: 18, fontWeight: "bold" },
   banner: {
