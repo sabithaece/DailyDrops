@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   navItem: { alignItems: "center" },
-  navText: { fontSize: 14, color: "#555" },
+  navText: { fontSize: 14, color: "#554" },
 });
 
 export default SearchScreen;
