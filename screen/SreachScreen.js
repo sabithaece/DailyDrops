@@ -9,11 +9,12 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; 
 
-// Reusable ProductCard component
+
 const ProductCard = ({ title, price, imageUrl, onSubscribe }) => (
   <View style={styles.card}>
-    <Image source={{ uri: imageUrl }} style={styles.image} />
+    <Image source={imageUrl} style={styles.image} />
     <View style={styles.info}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.price}>{price}</Text>
@@ -24,29 +25,27 @@ const ProductCard = ({ title, price, imageUrl, onSubscribe }) => (
   </View>
 );
 
-// Sample data for products
 const products = [
   {
     id: "1",
     title: "Aavin Milk",
     price: "₹20/500ml",
-    imageUrl: "https://yourimageurl.com/aavinmilk.jpg",
+    imageUrl: require("../assets/aavinmilk.png"), // Fixed for local image
   },
   {
     id: "2",
     title: "Arokya Milk",
     price: "₹21/500ml",
-    imageUrl: "https://yourimageurl.com/arokyamilk.jpg",
+    imageUrl: require("../assets/arokyamilk.png"), // Fixed for local image
   },
   {
     id: "3",
     title: "Bisleri Water Can",
     price: "₹77/25ltr Can",
-    imageUrl: "https://yourimageurl.com/bisleriwater.jpg",
+    imageUrl: require("../assets/bisleri.png"), // Fixed for local image
   },
 ];
 
-// Sample data for icons (running low)
 const runningLowItems = [
   { id: "1", name: "Water Can", image: require("../assets/water-can.png") },
   { id: "2", name: "Milk", image: require("../assets/milk.png") },
@@ -83,7 +82,6 @@ const SearchScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Search Box */}
       <TextInput
         style={styles.searchBox}
         placeholder="Search products..."
@@ -104,7 +102,6 @@ const SearchScreen = ({ navigation }) => {
           />
         </View>
 
-        {/* Section: Popular in Your Area */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Popular in Your Area</Text>
           <FlatList
@@ -117,18 +114,19 @@ const SearchScreen = ({ navigation }) => {
         </View>
       </ScrollView>
 
-      {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Home")}
         >
+          <Icon name="home" size={24} color="#555" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Search")}
         >
+          <Icon name="search" size={24} color="#555" />
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
 
@@ -136,13 +134,15 @@ const SearchScreen = ({ navigation }) => {
           style={styles.navItem}
           onPress={() => navigation.navigate("drops")}
         >
-          <Text style={styles.navText}>drops</Text>
+          <Icon name="dropbox" size={24} color="#555" />
+          <Text style={styles.navText}>Drops</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Account")}
         >
+          <Icon name="user" size={24} color="#555" />
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
       </View>

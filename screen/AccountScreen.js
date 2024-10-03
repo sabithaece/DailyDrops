@@ -7,14 +7,13 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-
-const profileImage = "https://via.placeholder.com/100"; // Dummy profile image URL
+import Icon from "react-native-vector-icons/FontAwesome"; 
+const profileImage = "https://via.placeholder.com/100"; 
 
 const AccountScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* Profile Section */}
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.profileContainer}>
           <View style={styles.profileImageContainer}>
             <Image source={{ uri: profileImage }} style={styles.profileImage} />
@@ -33,7 +32,7 @@ const AccountScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Menu Options */}
+        
         <TouchableOpacity style={styles.menuItem}>
           <Text style={styles.menuText}>Active Subscriptions</Text>
         </TouchableOpacity>
@@ -55,18 +54,19 @@ const AccountScreen = ({ navigation }) => {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Home")}
         >
+          <Icon name="home" size={24} color="#555" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Search")}
         >
+          <Icon name="search" size={24} color="#555" />
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
 
@@ -74,13 +74,15 @@ const AccountScreen = ({ navigation }) => {
           style={styles.navItem}
           onPress={() => navigation.navigate("drops")}
         >
-          <Text style={styles.navText}>drops</Text>
+          <Icon name="dropbox" size={24} color="#555" />
+          <Text style={styles.navText}>Drops</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Account")}
         >
+          <Icon name="user" size={24} color="#555" />
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
       </View>
@@ -150,6 +152,7 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 14,
     color: "#555",
+    marginTop: 5,
   },
 });
 

@@ -8,12 +8,14 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/FontAwesome"; 
 
 const DropsScreen = () => {
   const navigation = useNavigation();
   const pressSearch = () => {
     navigation.navigate("Search");
   };
+
   // Date row data
   const dates = ["12", "13", "14", "15", "16", "17", "18"];
   const dayNames = ["THU", "FRI", "SAT", "SUN", "MON", "TUE", "WED"];
@@ -26,7 +28,7 @@ const DropsScreen = () => {
       quantity: "2 x 500ml pouch",
       deliveryTime: "Everyday 6:30 - 7:00AM",
       status: "Delivered",
-      image: "https://example.com/aavin-milk.jpg", // Replace with actual image URL or use require
+      image: require("../assets/aavinmilk.png"), 
     },
     {
       id: 2,
@@ -34,7 +36,7 @@ const DropsScreen = () => {
       quantity: "2 Pcs",
       deliveryTime: "Every SUN, WED 6:30 - 7:00AM",
       status: "Delivered",
-      image: "https://example.com/tender-coconut.jpg",
+      image: require("../assets/tender-coconut.png"), 
     },
     {
       id: 3,
@@ -42,7 +44,7 @@ const DropsScreen = () => {
       quantity: "2 x 25ltr can",
       deliveryTime: "Every SUN, WED, THU 4:30 - 5:30PM",
       status: "Scheduled",
-      image: "https://example.com/aquafina.jpg",
+      image: require("../assets/aquafina.png"), 
     },
   ];
 
@@ -71,7 +73,7 @@ const DropsScreen = () => {
         {products.map((product) => (
           <View key={product.id} style={styles.productItem}>
             <Image
-              source={{ uri: product.image }}
+              source={product.image} // Correct usage of local images
               style={styles.productImage}
             />
             <View style={styles.productDetails}>
@@ -96,15 +98,17 @@ const DropsScreen = () => {
         ))}
       </ScrollView>
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation with Icons */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Home")}
         >
+          <Icon name="home" size={24} color="#555" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={pressSearch}>
+          <Icon name="search" size={24} color="#555" />
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
 
@@ -112,13 +116,15 @@ const DropsScreen = () => {
           style={styles.navItem}
           onPress={() => navigation.navigate("drops")}
         >
-          <Text style={styles.navText}>drops</Text>
+          <Icon name="dropbox" size={24} color="#555" />
+          <Text style={styles.navText}>Drops</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Account")}
         >
+          <Icon name="user" size={24} color="#555" />
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
       </View>
@@ -231,7 +237,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   navItem: { alignItems: "center" },
-  navText: { fontSize: 14, color: "#555" },
+  navText: { fontSize: 14, color: "#555", marginTop: 5 },
 });
 
 export default DropsScreen;

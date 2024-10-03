@@ -9,6 +9,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; 
 
 const HomeScreen = ({ navigation }) => {
   const dailySupplies = [
@@ -43,7 +44,6 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Top Section - Delivery Info */}
       <View style={styles.header}>
         <Text style={styles.deliveryText}>Delivering To</Text>
         <Text style={styles.homeText}>Mythreya's Home</Text>
@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
           source={require("../assets/aquafina.png")}
           style={styles.bannerImage}
         />
-        <View >
+        <View>
           <Text style={styles.bannerTitle}>Daily Drop</Text>
           <Text style={styles.bannerSubtitle}>Thirsty for Savings?</Text>
           <Text style={styles.bannerDescription}>
@@ -70,7 +70,6 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Daily Supplies */}
       <Text style={styles.sectionTitle}>Daily Supplies</Text>
       <FlatList
         data={dailySupplies}
@@ -82,7 +81,6 @@ const HomeScreen = ({ navigation }) => {
         nestedScrollEnabled={true}
       />
 
-      {/* Other Services */}
       <Text style={styles.sectionTitle}>Other Services</Text>
       <FlatList
         data={otherServices}
@@ -94,18 +92,19 @@ const HomeScreen = ({ navigation }) => {
         nestedScrollEnabled={true}
       />
 
-      {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Home")}
         >
+          <Icon name="home" size={24} color="#555" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Search")}
         >
+          <Icon name="search" size={24} color="#555" />
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
 
@@ -113,13 +112,15 @@ const HomeScreen = ({ navigation }) => {
           style={styles.navItem}
           onPress={() => navigation.navigate("drops")}
         >
-          <Text style={styles.navText}>drops</Text>
+          <Icon name="dropbox" size={24} color="#555" />
+          <Text style={styles.navText}>Drops</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Account")}
         >
+          <Icon name="user" size={24} color="#555" />
           <Text style={styles.navText}>Account</Text>
         </TouchableOpacity>
       </View>
