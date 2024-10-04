@@ -10,6 +10,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome"; 
 
+
+
 const DropsScreen = () => {
   const navigation = useNavigation();
   const pressSearch = () => {
@@ -55,8 +57,8 @@ const DropsScreen = () => {
         <Text style={styles.headerText}>15 September</Text>
       </View>
 
-      {/* Date row */}
-      <View style={styles.dateRow}>
+      {/* Scrollable Date row */}
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.dateRow}>
         {dates.map((date, index) => (
           <TouchableOpacity
             key={index}
@@ -66,7 +68,7 @@ const DropsScreen = () => {
             <Text style={styles.dateText}>{date}</Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
 
       {/* Product list */}
       <ScrollView style={styles.productList}>
@@ -152,7 +154,6 @@ const styles = StyleSheet.create({
   },
   dateRow: {
     flexDirection: "row",
-    justifyContent: "space-around",
     marginBottom: 10,
   },
   dateItem: {
@@ -178,14 +179,14 @@ const styles = StyleSheet.create({
   productItem: {
     flexDirection: "row",
     backgroundColor: "#fff",
-    padding: 15,
+    padding: 10,
     marginBottom: 10,
     borderRadius: 10,
     alignItems: "center",
   },
   productImage: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
     marginRight: 15,
   },
   productDetails: {
@@ -212,16 +213,20 @@ const styles = StyleSheet.create({
   delivered: {
     backgroundColor: "#dcfce7",
     color: "#14532d",
+    width : 98
+
   },
   scheduled: {
     backgroundColor: "#e0f2fe",
     color: "#164e63",
+    width : 97
   },
   manageButton: {
     backgroundColor: "#9dd694",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    // marginTop: 10,
   },
   manageButtonText: {
     color: "#155b44",

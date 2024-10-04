@@ -9,10 +9,10 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome"; 
-
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const ProductCard = ({ title, price, imageUrl, onSubscribe }) => (
+  
   <View style={styles.card}>
     <Image source={imageUrl} style={styles.image} />
     <View style={styles.info}>
@@ -30,19 +30,19 @@ const products = [
     id: "1",
     title: "Aavin Milk",
     price: "₹20/500ml",
-    imageUrl: require("../assets/aavinmilk.png"), // Fixed for local image
+    imageUrl: require("../assets/aavinmilk.png"),
   },
   {
     id: "2",
     title: "Arokya Milk",
     price: "₹21/500ml",
-    imageUrl: require("../assets/arokyamilk.png"), // Fixed for local image
+    imageUrl: require("../assets/arokyamilk.png"),
   },
   {
     id: "3",
     title: "Bisleri Water Can",
     price: "₹77/25ltr Can",
-    imageUrl: require("../assets/bisleri.png"), // Fixed for local image
+    imageUrl: require("../assets/bisleri.png"),
   },
 ];
 
@@ -55,7 +55,10 @@ const runningLowItems = [
 const SearchScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
-
+const [activeTab, setActiveTab] = useState("Daily");
+ const handleTabPress = (tab) => {
+   setActiveTab(tab);
+ };
   const handleSearch = (text) => {
     setSearchQuery(text);
     const filtered = products.filter((product) =>
@@ -88,6 +91,41 @@ const SearchScreen = ({ navigation }) => {
         value={searchQuery}
         onChangeText={handleSearch}
       />
+
+      {/* Header Section */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "Daily" && styles.activeTab]}
+          onPress={() => handleTabPress("Daily")}
+        >
+          <Text style={styles.tabText}>Daily</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "Groceries" && styles.activeTab]}
+          onPress={() => handleTabPress("Groceries")}
+        >
+          <Text style={styles.tabText}>Groceries</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.tab,
+            activeTab === "Other Services" && styles.activeTab,
+          ]}
+          onPress={() => handleTabPress("Other Services")}
+        >
+          <Text style={styles.tabText}>Other Services</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "Newly In" && styles.activeTab]}
+          onPress={() => handleTabPress("Newly In")}
+        >
+          <Text style={styles.tabText}>Newly In</Text>
+        </TouchableOpacity>
+      </View>
+
 
       <ScrollView style={styles.scrollViewContent}>
         {/* Section: What Are You Running Low On */}
@@ -246,6 +284,37 @@ const styles = StyleSheet.create({
   },
   navItem: { alignItems: "center" },
   navText: { fontSize: 14, color: "#554" },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1,
+  },
+  tab: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  activeTab: {
+    borderBottomWidth: 2,
+    borderBottomColor: "#4CAF50",
+  },
+  tabText: {
+    fontSize: 16,
+    color: "#555",
+    fontWeight: "bold",
+  },
+  contentText: {
+    marginTop: 20,
+    textAlign: "center",
+    fontSize: 18,
+  },
 });
 
 export default SearchScreen;
