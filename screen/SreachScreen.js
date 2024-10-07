@@ -12,7 +12,6 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const ProductCard = ({ title, price, imageUrl, onSubscribe }) => (
-  
   <View style={styles.card}>
     <Image source={imageUrl} style={styles.image} />
     <View style={styles.info}>
@@ -55,10 +54,12 @@ const runningLowItems = [
 const SearchScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
-const [activeTab, setActiveTab] = useState("Daily");
- const handleTabPress = (tab) => {
-   setActiveTab(tab);
- };
+  const [activeTab, setActiveTab] = useState("Daily");
+
+  const handleTabPress = (tab) => {
+    setActiveTab(tab);
+  };
+
   const handleSearch = (text) => {
     setSearchQuery(text);
     const filtered = products.filter((product) =>
@@ -77,10 +78,17 @@ const [activeTab, setActiveTab] = useState("Daily");
   );
 
   const renderRunningLowItem = ({ item }) => (
-    <View style={styles.iconBox}>
+    <TouchableOpacity
+      style={styles.iconBox}
+      onPress={() => {
+        if (item.name === "Water Can") {
+          navigation.navigate("WaterCan"); // Navigate to WaterCanScreen
+        }
+      }}
+    >
       <Image source={item.image} style={styles.iconImage} />
       <Text style={styles.iconText}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -126,7 +134,6 @@ const [activeTab, setActiveTab] = useState("Daily");
         </TouchableOpacity>
       </View>
 
-
       <ScrollView style={styles.scrollViewContent}>
         {/* Section: What Are You Running Low On */}
         <View style={styles.section}>
@@ -160,6 +167,7 @@ const [activeTab, setActiveTab] = useState("Daily");
           <Icon name="home" size={24} color="#555" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Search")}
@@ -282,12 +290,12 @@ const styles = StyleSheet.create({
     borderTopColor: "#EEE",
     borderTopWidth: 1,
   },
-  navItem: { alignItems: "center" },
-  navText: { fontSize: 14, color: "#554" },
-
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
+  navItem: {
+    alignItems: "center",
+  },
+  navText: {
+    fontSize: 14,
+    color: "#554",
   },
   header: {
     flexDirection: "row",
