@@ -7,6 +7,7 @@ import DropsScreen from "./screen/DropsScreen";
 import AccountScreen from "./screen/AccountScreen";
 import DetailsScreen from "./screen/DetailsScreen";
 import WaterCanScreen from "./screen/WaterCanScreen";
+import VendorSubscriptionScreen from "./screen/VendorSubscriptionScreen"; 
 
 
 
@@ -22,6 +23,10 @@ const App = () => {
         <Stack.Screen name="Account" component={AccountScreen} />
         <Stack.Screen name="details" component={DetailsScreen} />
         <Stack.Screen name="WaterCan" component={WaterCanScreen} />
+        <Stack.Screen
+          name="VendorSubscriptionScreen"
+          component={VendorSubscriptionScreen}
+        />
 
         {/* You can add more screens here as needed */}
       </Stack.Navigator>

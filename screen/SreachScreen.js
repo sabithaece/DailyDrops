@@ -82,7 +82,7 @@ const SearchScreen = ({ navigation }) => {
       style={styles.iconBox}
       onPress={() => {
         if (item.name === "Water Can") {
-          navigation.navigate("WaterCan"); // Navigate to WaterCanScreen
+          navigation.navigate("WaterCan"); 
         }
       }}
     >

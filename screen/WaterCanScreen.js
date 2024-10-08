@@ -8,6 +8,8 @@ import {
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native"; // Ensure you import the navigation hook
+
 const waterCanData = [
   {
     id: "1",
@@ -22,7 +24,7 @@ const waterCanData = [
     image: require("../assets/aquafina.png"),
   },
   {
-    id: "3",
+    id: "3",  
     name: "Blue Star Water Can",
     price: "₹77/25 ltr Can",
     image: require("../assets/bluestar.png"),
@@ -30,6 +32,8 @@ const waterCanData = [
 ];
 
 const WaterCanScreen = () => {
+  const navigation = useNavigation(); // Add navigation hook
+
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Image source={item.image} style={styles.image} />
@@ -37,15 +41,19 @@ const WaterCanScreen = () => {
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.price}>{item.price}</Text>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("VendorSubscriptionScreen")} // Navigate to the required screen
+      >
         <Text style={styles.buttonText}>Subscribe</Text>
       </TouchableOpacity>
     </View>
-  ); 
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Water Can</Text>
+      {/* FlatList is now the main scrollable component */}
       <FlatList
         data={waterCanData}
         renderItem={renderItem}
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 14,
     color: "#554",
-  }, 
+  },
 });
 
 export default WaterCanScreen;
