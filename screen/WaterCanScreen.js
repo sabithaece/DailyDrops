@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useNavigation } from "@react-navigation/native"; // Ensure you import the navigation hook
+import { useNavigation } from "@react-navigation/native"; 
 
 const waterCanData = [
   {
@@ -43,7 +43,7 @@ const WaterCanScreen = () => {
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("VendorSubscriptionScreen")} // Navigate to the required screen
+        onPress={() => navigation.navigate("Vendor")} 
       >
         <Text style={styles.buttonText}>Subscribe</Text>
       </TouchableOpacity>

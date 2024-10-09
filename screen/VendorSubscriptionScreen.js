@@ -3,14 +3,15 @@ import {
   View,
   Text,
   Image,
-  Button,
   TouchableOpacity,
   StyleSheet,
   FlatList,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native"; 
 
 const VendorSubscriptionScreen = () => {
-  // Sample data for vendor and products
+  const navigation = useNavigation(); 
+
   const vendor = {
     name: "Swetha Agencies",
     location: "OMR, Kazhipattur",
@@ -36,7 +37,7 @@ const VendorSubscriptionScreen = () => {
 
   const renderOtherProduct = ({ item }) => (
     <View style={styles.otherProductContainer}>
-      <Image source={{ uri: item.image }} style={styles.otherProductImage} />
+      <Image source={item.imageUrl} style={styles.otherProductImage} />
       <Text>{item.name}</Text>
     </View>
   );
@@ -48,24 +49,31 @@ const VendorSubscriptionScreen = () => {
         <View style={styles.vendorAvatar}>
           <Text style={styles.vendorAvatarText}>SA</Text>
         </View>
-        <View>
+        <View style={styles.vendorDetails}>
           <Text style={styles.vendorName}>{vendor.name}</Text>
           <Text style={styles.vendorLocation}>{vendor.location}</Text>
         </View>
       </View>
 
+      {/* Gray Line */}
+      <View style={styles.grayLine} />
+
       {/* Main Product Information */}
       <View style={styles.mainProduct}>
-        <Image
-          source={{ uri: vendor.mainProduct.image }}
-          style={styles.mainProductImage}
-        />
         <Text style={styles.productName}>{vendor.mainProduct.name}</Text>
         <Text style={styles.productSize}>{vendor.mainProduct.size}</Text>
-        <Text style={styles.productPrice}>
-          ₹ {vendor.mainProduct.price} Inclusive of all tax
-        </Text>
-        <TouchableOpacity style={styles.subscribeButton}>
+        <Image
+          source={vendor.mainProduct.imageUrl}
+          style={styles.mainProductImage}
+        />
+        <Text style={styles.priceBold}>₹ {vendor.mainProduct.price}</Text>
+
+        <Text style={styles.taxInfo}>Inclusive of all tax</Text>
+
+        <TouchableOpacity
+          style={styles.subscribeButton}
+          onPress={() => navigation.navigate("SubcriptionStratScreen")} 
+        >
           <Text style={styles.subscribeButtonText}>Subscribe</Text>
         </TouchableOpacity>
       </View>
@@ -79,6 +87,7 @@ const VendorSubscriptionScreen = () => {
           keyExtractor={(item) => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={styles.separator} />} 
         />
       </View>
     </View>
@@ -94,6 +103,7 @@ const styles = StyleSheet.create({
   vendorInfo: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     marginBottom: 16,
   },
   vendorAvatar: {
@@ -110,12 +120,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
+  vendorDetails: {
+    justifyContent: "center",
+  },
   vendorName: {
     fontWeight: "bold",
     fontSize: 18,
   },
   vendorLocation: {
     color: "#888",
+  },
+  grayLine: {
+    height: 1,
+    backgroundColor: "#D3D3D3",
+    width: "100%",
+    marginVertical: 10,
   },
   mainProduct: {
     alignItems: "center",
@@ -130,23 +149,39 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     marginTop: 8,
+    textAlign: "left",
+    marginRight: 200,
   },
   productSize: {
     color: "#888",
+    textAlign: "center",
+    marginRight: 200,
   },
   productPrice: {
     color: "#888",
-    marginTop: 8,
+    textAlign: "left",
+  },
+  priceBold: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginRight: 250,
+  },
+  taxInfo: {
+    color: "#888",
+    fontSize: 12,
+    textAlign: "center",
+    marginRight: 200,
   },
   subscribeButton: {
-    backgroundColor: "#32CD32",
+    backgroundColor: "#9dd694",
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     borderRadius: 5,
-    marginTop: 10,
+    marginTop: -40,
+    marginLeft: 150,
   },
   subscribeButtonText: {
-    color: "#fff",
+    color: "#064e3b",
     fontWeight: "bold",
   },
   otherProductsContainer: {
@@ -158,13 +193,20 @@ const styles = StyleSheet.create({
   },
   otherProductContainer: {
     alignItems: "center",
-    marginRight: 10,
+    borderWidth: 1,
+    borderColor: "#9dd694",
+    borderRadius: 10,
+    padding: 20,
+    marginHorizontal: 5,
   },
   otherProductImage: {
     width: 80,
     height: 100,
     resizeMode: "contain",
     marginBottom: 5,
+  },
+  separator: {
+    width: 10,
   },
 });
 

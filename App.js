@@ -7,9 +7,8 @@ import DropsScreen from "./screen/DropsScreen";
 import AccountScreen from "./screen/AccountScreen";
 import DetailsScreen from "./screen/DetailsScreen";
 import WaterCanScreen from "./screen/WaterCanScreen";
-import VendorSubscriptionScreen from "./screen/VendorSubscriptionScreen"; 
-
-
+import Vendor from "./screen/VendorSubscriptionScreen"; 
+import SubcriptionStratScreen from "./screen/SubcriptionStratScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,12 +22,11 @@ const App = () => {
         <Stack.Screen name="Account" component={AccountScreen} />
         <Stack.Screen name="details" component={DetailsScreen} />
         <Stack.Screen name="WaterCan" component={WaterCanScreen} />
+        <Stack.Screen name="Vendor" component={Vendor} />
         <Stack.Screen
-          name="VendorSubscriptionScreen"
-          component={VendorSubscriptionScreen}
+          name="SubcriptionStratScreen"
+          component={SubcriptionStratScreen}
         />
-
-        {/* You can add more screens here as needed */}
       </Stack.Navigator>
     </NavigationContainer>
   );
