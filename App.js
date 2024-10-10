@@ -9,6 +9,7 @@ import DetailsScreen from "./screen/DetailsScreen";
 import WaterCanScreen from "./screen/WaterCanScreen";
 import Vendor from "./screen/VendorSubscriptionScreen"; 
 import SubcriptionStratScreen from "./screen/SubcriptionStratScreen";
+import VendorDetailsScreen from "./screen/VendorDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,10 @@ const App = () => {
         <Stack.Screen
           name="SubcriptionStratScreen"
           component={SubcriptionStratScreen}
+        />
+        <Stack.Screen
+          name="VendorDetailsScreen"
+          component={VendorDetailsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

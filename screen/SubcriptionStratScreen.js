@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { Menu, Provider } from "react-native-paper";
 
-const SubcriptionStratScreen = () => {
+const SubscriptionStartScreen = () => {
   const navigation = useNavigation();
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
 
   const handleGoHome = () => {
     navigation.navigate("Home");
   };
 
+  const handleVendorDetails = () => {
+    closeMenu();
+    navigation.navigate("VendorDetailsScreen");
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <Ionicons name="checkmark-circle" size={50} color="green" />
-        <Text style={styles.message}>
-          Your Subscription Will Start on {"\n"}
-          <Text style={styles.date}>3rd October 2024</Text>
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={handleGoHome}>
-          <Text style={styles.buttonText}>Go To Home</Text>
-        </TouchableOpacity>
+    <Provider>
+      <View style={styles.container}>
+        {/* Three Dots Menu */}
+        <View style={styles.menuContainer}>
+          <Menu
+            visible={menuVisible}
+            onDismiss={closeMenu}
+            anchor={
+              <TouchableOpacity onPress={openMenu}>
+                <Ionicons name="ellipsis-vertical" size={24} color="black" />
+              </TouchableOpacity>
+            }
+          >
+            <Menu.Item onPress={handleVendorDetails} title="VendorDetails" />
+          </Menu>
+        </View>
+
+        <View style={styles.box}>
+          <Ionicons name="checkmark-circle" size={50} color="green" />
+          <Text style={styles.message}>
+            Your Subscription Will Start on {"\n"}
+            <Text style={styles.date}>3rd October 2024</Text>
+          </Text>
+          <TouchableOpacity style={styles.button} onPress={handleGoHome}>
+            <Text style={styles.buttonText}>Go To Home</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </Provider>
   );
 };
 
@@ -32,6 +59,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+  },
+  menuContainer: {
+    position: "absolute",
+    top: 40,
+    right: 20,
   },
   box: {
     width: "80%",
@@ -71,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SubcriptionStratScreen;
+export default SubscriptionStartScreen;

@@ -1,26 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/FontAwesome"; 
-
-
+import Icon from "react-native-vector-icons/FontAwesome";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment"; // For date formatting
 
 const DropsScreen = () => {
   const navigation = useNavigation();
+  const [selectedTab, setSelectedTab] = useState("Delivered"); // To manage which list is shown
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today
+
   const pressSearch = () => {
     navigation.navigate("Search");
   };
-
-  // Date row data
-  const dates = ["12", "13", "14", "15", "16", "17", "18"];
-  const dayNames = ["THU", "FRI", "SAT", "SUN", "MON", "TUE", "WED"];
 
   // Product data
   const products = [
@@ -30,7 +30,7 @@ const DropsScreen = () => {
       quantity: "2 x 500ml pouch",
       deliveryTime: "Everyday 6:30 - 7:00AM",
       status: "Delivered",
-      image: require("../assets/aavinmilk.png"), 
+      image: require("../assets/aavinmilk.png"),
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ const DropsScreen = () => {
       quantity: "2 Pcs",
       deliveryTime: "Every SUN, WED 6:30 - 7:00AM",
       status: "Delivered",
-      image: require("../assets/tender-coconut.png"), 
+      image: require("../assets/tender-coconut.png"),
     },
     {
       id: 3,
@@ -46,59 +46,111 @@ const DropsScreen = () => {
       quantity: "2 x 25ltr can",
       deliveryTime: "Every SUN, WED, THU 4:30 - 5:30PM",
       status: "Scheduled",
-      image: require("../assets/aquafina.png"), 
+      image: require("../assets/aquafina.png"),
     },
   ];
 
+  // Separate Delivered and Scheduled products
+  const deliveredProducts = products.filter(
+    (product) => product.status === "Delivered"
+  );
+  const scheduledProducts = products.filter(
+    (product) => product.status === "Scheduled"
+  );
+
+  // Render Product List Item
+  const renderProductItem = ({ item }) => (
+    <View style={styles.productItem}>
+      <Image source={item.image} style={styles.productImage} />
+      <View style={styles.productDetails}>
+        <Text style={styles.productName}>{item.name}</Text>
+        <Text style={styles.productQuantity}>{item.quantity}</Text>
+        <Text style={styles.deliveryTime}>{item.deliveryTime}</Text>
+        <Text
+          style={[
+            styles.status,
+            item.status === "Delivered" ? styles.delivered : styles.scheduled,
+          ]}
+        >
+          {item.status}
+        </Text>
+      </View>
+      <TouchableOpacity style={styles.manageButton}>
+        <Text style={styles.manageButtonText}>Manage</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  // Function to show the date picker
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  // Function to hide the date picker
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  // Handle date selection
+  const handleConfirm = (date) => {
+    setSelectedDate(date); // Update the selected date
+    hideDatePicker(); // Hide the picker
+  };
+
   return (
     <View style={styles.container}>
-      {/* Header */}
+      {/* Top Header with Calendar Icon */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>15 September</Text>
+        <Text style={styles.headerTitle}>Drops</Text>
+        <TouchableOpacity onPress={showDatePicker} style={styles.calendarIcon}>
+          <Icon name="calendar" size={24} color="#555" />
+        </TouchableOpacity>
       </View>
 
-      {/* Scrollable Date row */}
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.dateRow}>
-        {dates.map((date, index) => (
-          <TouchableOpacity
-            key={index}
-            style={index === 3 ? styles.selectedDate : styles.dateItem}
-          >
-            <Text style={styles.dayText}>{dayNames[index]}</Text>
-            <Text style={styles.dateText}>{date}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {/* Date Picker Modal */}
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        maximumDate={new Date(2025, 12, 31)} // Allow future months
+        minimumDate={new Date(2023, 0, 1)} // Allow past months
+      />
 
-      {/* Product list */}
-      <ScrollView style={styles.productList}>
-        {products.map((product) => (
-          <View key={product.id} style={styles.productItem}>
-            <Image
-              source={product.image} // Correct usage of local images
-              style={styles.productImage}
-            />
-            <View style={styles.productDetails}>
-              <Text style={styles.productName}>{product.name}</Text>
-              <Text style={styles.productQuantity}>{product.quantity}</Text>
-              <Text style={styles.deliveryTime}>{product.deliveryTime}</Text>
-              <Text
-                style={[
-                  styles.status,
-                  product.status === "Delivered"
-                    ? styles.delivered
-                    : styles.scheduled,
-                ]}
-              >
-                {product.status}
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.manageButton}>
-              <Text style={styles.manageButtonText}>Manage</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
+      {/* Top Tabs for Delivered and Scheduled */}
+      <View style={styles.tabs}>
+        <TouchableOpacity
+          style={[
+            styles.tabButton,
+            selectedTab === "Delivered" && styles.activeTab,
+          ]}
+          onPress={() => setSelectedTab("Delivered")}
+        >
+          <Text style={styles.tabButtonText}>Delivered</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.tabButton,
+            selectedTab === "Scheduled" && styles.activeTab,
+          ]}
+          onPress={() => setSelectedTab("Scheduled")}
+        >
+          <Text style={styles.tabButtonText}>Scheduled</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Add space between the tabs and product list */}
+      <View style={{ height: 20 }} />
+
+      {/* Displaying the corresponding list based on selected tab */}
+      <FlatList
+        data={
+          selectedTab === "Delivered" ? deliveredProducts : scheduledProducts
+        }
+        renderItem={renderProductItem}
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.productList}
+      />
 
       {/* Bottom Navigation with Icons */}
       <View style={styles.bottomNav}>
@@ -113,7 +165,6 @@ const DropsScreen = () => {
           <Icon name="search" size={24} color="#555" />
           <Text style={styles.navText}>Search</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("drops")}
@@ -121,7 +172,6 @@ const DropsScreen = () => {
           <Icon name="dropbox" size={24} color="#555" />
           <Text style={styles.navText}>Drops</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate("Account")}
@@ -141,40 +191,42 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   header: {
-    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
     marginBottom: 10,
-    borderRadius: 10,
+    paddingHorizontal: 10,
   },
-  headerText: {
-    fontSize: 18,
+  headerTitle: {
+    fontSize: 20,
     fontWeight: "bold",
   },
-  dateRow: {
+  calendarIcon: {
+    padding: 10,
+  },
+  tabs: {
     flexDirection: "row",
+    justifyContent: "space-around",
     marginBottom: 10,
   },
-  dateItem: {
+  tabButton: {
+    flex: 1,
+    paddingVertical: 10,
     alignItems: "center",
-    padding: 10,
-  },
-  selectedDate: {
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "#064e3b",
+    backgroundColor: "#94a3b8",
     borderRadius: 10,
+    marginHorizontal: 5,
   },
-  dayText: {
-    color: "#777",
+  activeTab: {
+    backgroundColor: "#064e3b",
   },
-  dateText: {
+  tabButtonText: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#fff",
   },
   productList: {
-    marginTop: 10,
+    flex: 1,
   },
   productItem: {
     flexDirection: "row",
@@ -213,20 +265,18 @@ const styles = StyleSheet.create({
   delivered: {
     backgroundColor: "#dcfce7",
     color: "#14532d",
-    width : 98
-
+    width: 98,
   },
   scheduled: {
     backgroundColor: "#e0f2fe",
     color: "#164e63",
-    width : 97
+    width: 97,
   },
   manageButton: {
     backgroundColor: "#9dd694",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    // marginTop: 10,
   },
   manageButtonText: {
     color: "#155b44",
