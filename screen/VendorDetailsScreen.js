@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons"; // You need to install react-native-vector-icons or expo icons
 
 const VendorDetailsScreen = () => {
   const navigation = useNavigation();
@@ -42,17 +43,22 @@ const VendorDetailsScreen = () => {
         </View>
       </View>
 
+      {/* Grey Line Above Distributor Information */}
+      <View style={styles.separator} />
+
       {/* Distributor Information */}
       <View style={styles.distributorInfo}>
         <Text style={styles.distributorText}>{vendor.distributorFor}</Text>
       </View>
 
-      {/* Call & Location Buttons */}
+      {/* Call & Location Buttons (Vertical Layout) */}
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={handleCallVendor}>
+          <Ionicons name="call-outline" size={20} color="#064e3b" />
           <Text style={styles.buttonText}>Call Vendor</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleStoreLocation}>
+          <Ionicons name="location-outline" size={20} color="#064e3b" />
           <Text style={styles.buttonText}>Store Location</Text>
         </TouchableOpacity>
       </View>
@@ -100,9 +106,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
+    padding: 36,
   },
   avatarContainer: {
-    position: "relative",
     justifyContent: "center",
     alignItems: "center",
     width: 60,
@@ -114,6 +120,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 24,
+    textAlign: "center",
+    lineHeight: 60,
   },
   onlineIndicator: {
     position: "absolute",
@@ -137,6 +145,12 @@ const styles = StyleSheet.create({
     color: "#888",
     fontSize: 14,
   },
+  /* Separator (Grey Line) */
+  separator: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    marginBottom: 16,
+  },
   distributorInfo: {
     marginBottom: 16,
   },
@@ -144,22 +158,38 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#555",
   },
+  /* Vertical Button Container */
   buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     marginBottom: 16,
   },
   button: {
-    flex: 1,
-    marginHorizontal: 8,
-    paddingVertical: 12,
-    backgroundColor: "#32CD32",
-    borderRadius: 5,
-    justifyContent: "center",
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#064e3b",
+    borderRadius: 5,
+    margin: 8,
+  },
+  manageButton: {
+    backgroundColor: "#064e3b",
+    borderRadius: 5,
+    padding: 8,
+  },
+  manageButtonText: {
+    color: "#fff",
+  },
+  statusText: {
+    color: "#32CD32",
+    fontSize: 12,
+    marginBottom: 8,
+    alignSelf: "flex-start", // Align the status text to the bottom left
   },
   buttonText: {
-    color: "#fff",
+    marginLeft: 8,
+    color: "#000000",
     fontWeight: "bold",
     fontSize: 16,
   },
@@ -179,6 +209,7 @@ const styles = StyleSheet.create({
     borderColor: "#E0E0E0",
     borderRadius: 10,
     backgroundColor: "#F8F8F8",
+    justifyContent: "space-between",
   },
   subscriptionImage: {
     width: 60,
@@ -189,10 +220,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 16,
   },
-  subscriptionName: {
-    fontWeight: "bold",
-    fontSize: 16,
-  },
   subscriptionQuantity: {
     fontSize: 14,
     color: "#888",
@@ -202,18 +229,22 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   subscriptionActions: {
-    alignItems: "center",
+    justifyContent: "flex-end", // Align to the bottom
+    alignItems: "flex-start", // Align to the left
+    flexDirection: "column", // Ensure the items are stacked vertically
   },
   statusText: {
     color: "#32CD32",
     fontSize: 12,
     marginBottom: 8,
+    alignSelf: "flex-start", // Align the status text to the bottom left
   },
   manageButton: {
     backgroundColor: "#F0F0F0",
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 5,
+    alignSelf: "flex-end", // Keep the manage button on the right
   },
   manageButtonText: {
     fontSize: 12,

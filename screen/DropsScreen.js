@@ -117,25 +117,39 @@ const DropsScreen = () => {
         minimumDate={new Date(2023, 0, 1)} // Allow past months
       />
 
-      {/* Top Tabs for Delivered and Scheduled */}
+      {/* Toggle Buttons for Delivered and Scheduled */}
       <View style={styles.tabs}>
         <TouchableOpacity
           style={[
             styles.tabButton,
-            selectedTab === "Delivered" && styles.activeTab,
+            selectedTab === "Delivered" && styles.activeTab, // Highlight active tab
           ]}
           onPress={() => setSelectedTab("Delivered")}
         >
-          <Text style={styles.tabButtonText}>Delivered</Text>
+          <Text
+            style={[
+              styles.tabButtonText,
+              selectedTab === "Delivered" && styles.activeTabText, // Text style for active tab
+            ]}
+          >
+            Delivered
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             styles.tabButton,
-            selectedTab === "Scheduled" && styles.activeTab,
+            selectedTab === "Scheduled" && styles.activeTab, // Highlight active tab
           ]}
           onPress={() => setSelectedTab("Scheduled")}
         >
-          <Text style={styles.tabButtonText}>Scheduled</Text>
+          <Text
+            style={[
+              styles.tabButtonText,
+              selectedTab === "Scheduled" && styles.activeTabText, // Text style for active tab
+            ]}
+          >
+            Scheduled
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -223,6 +237,9 @@ const styles = StyleSheet.create({
   tabButtonText: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#fff",
+  },
+  activeTabText: {
     color: "#fff",
   },
   productList: {

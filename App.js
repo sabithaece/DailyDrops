@@ -28,7 +28,7 @@ const App = () => {
           name="SubcriptionStratScreen"
           component={SubcriptionStratScreen}
         />
-        <Stack.Screen
+        <Stack.Screen 
           name="VendorDetailsScreen"
           component={VendorDetailsScreen}
         />
